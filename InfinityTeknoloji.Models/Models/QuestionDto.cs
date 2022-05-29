@@ -15,7 +15,7 @@ namespace InfinityTeknoloji.Models.Models
 
         public int ExamID { get; set; }
              
-        public int CategoryID { get; set; }
+       
 
    
 

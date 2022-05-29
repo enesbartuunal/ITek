@@ -19,6 +19,10 @@ namespace InfinityTeknoloji.Models.Models
 
         public decimal? PassingScore { get; set; }
 
-     
+        public int CategoryID { get; set; }
+
+        public List<UserModel> Users { get; set; }
+
+
     }
 }

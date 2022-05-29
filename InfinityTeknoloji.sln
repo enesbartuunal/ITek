@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InfintyTeknoloji.Business",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InfinityTeknoloji.UI", "InfinityTeknoloji.UI\InfinityTeknoloji.UI.csproj", "{A0BA9C14-9E03-4337-8C07-3CA20709D6DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfinityTeknoloji.Models", "InfinityTeknoloji.Models\InfinityTeknoloji.Models.csproj", "{BFF2E666-2CD9-45E1-A83A-AB3C2AB7D794}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InfinityTeknoloji.Models", "InfinityTeknoloji.Models\InfinityTeknoloji.Models.csproj", "{BFF2E666-2CD9-45E1-A83A-AB3C2AB7D794}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

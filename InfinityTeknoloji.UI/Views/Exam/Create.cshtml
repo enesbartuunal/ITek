@@ -1,0 +1,59 @@
+﻿@model InfinityTeknoloji.Models.Models.ExamDto
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>Exam</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ExamName" class="control-label"></label>
+                <input asp-for="ExamName" class="form-control" />
+                <span asp-validation-for="ExamName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExamOverTime" class="control-label"></label>
+                <input asp-for="ExamOverTime" class="form-control" />
+                <span asp-validation-for="ExamOverTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExamDesc" class="control-label"></label>
+                <input asp-for="ExamDesc" class="form-control" />
+                <span asp-validation-for="ExamDesc" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PassingScore" class="control-label"></label>
+                <input asp-for="PassingScore" class="form-control" />
+                <span asp-validation-for="PassingScore" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CategoryID" class="control-label"></label>
+                <select asp-for="CategoryID" class="form-control">
+                    @foreach (var item in (List<CategoryDto>)ViewData["CategoryList"])
+                    {
+                        <option value="@item.CategoryID" label="@item.CategoryName">Select Category</option>
+                    }
+                </select>
+                <span asp-validation-for="PassingScore" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+              
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

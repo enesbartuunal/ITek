@@ -2,19 +2,28 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using InfinityTeknoloji.DataAccess.Context;
 using InfinityTeknoloji.DataAccess.Entities;
+using InfintyTeknoloji.Business.Implementation;
+using InfinityTeknoloji.UI.Middlewares;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("InfinityTeknolojiDbContextConnection") ?? throw new InvalidOperationException("Connection string 'InfinityTeknolojiDbContextConnection' not found.");
 
 builder.Services.AddDbContext<InfinityTeknolojiDbContext>(options =>
-    options.UseSqlServer(connectionString));;
+    options.UseSqlServer(connectionString)); ;
 
-builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<InfinityTeknolojiDbContext>();;
+builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>()
+            .AddEntityFrameworkStores<InfinityTeknolojiDbContext>(); ;
 builder.Services.AddRazorPages();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddScoped<ExamsManager>();
+builder.Services.AddScoped<QuestionsManager>();
+builder.Services.AddScoped<AnswerManager>();
+builder.Services.AddScoped<CategoryManager>();
+
 
 var app = builder.Build();
 
@@ -29,8 +38,9 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+
 app.UseRouting();
-app.UseAuthentication();;
+app.UseAuthentication(); ;
 
 app.UseAuthorization();
 
@@ -38,4 +48,6 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
+
 app.Run();
+

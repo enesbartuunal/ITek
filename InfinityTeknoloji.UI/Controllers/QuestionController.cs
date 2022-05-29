@@ -1,82 +1,111 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using InfinityTeknoloji.Models.Models;
+using InfintyTeknoloji.Business.Implementation;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InfinityTeknoloji.UI.Controllers
 {
     public class QuestionController : Controller
     {
-        // GET: QuestionController
-        public ActionResult Index()
+        private readonly ILogger _logger;
+        private readonly QuestionsManager _questionsManager;
+        public QuestionController(ILogger<QuestionController> logger, QuestionsManager QuestionsManager)
         {
+            _logger = logger;
+            _questionsManager = QuestionsManager;
+        }
+
+        // GET: QuestionController
+        public async Task<ActionResult> Index()
+        {
+            var list = await _questionsManager.Get();
+            if (list.IsSuccess)
+                return View(list.Data);
             return View();
         }
 
         // GET: QuestionController/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int QuestionId)
         {
-            return View();
+            var Question = await _questionsManager.GetById(QuestionId);
+            if (Question.IsSuccess)
+            {
+                return View(Question.Data);
+            }
+            else
+            {
+                return View();
+            }
         }
 
         // GET: QuestionController/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create(int ExamID)
         {
-            return View();
+            var QuestionDto = new QuestionDto();
+            QuestionDto.ExamID = ExamID;
+            return View(QuestionDto);
         }
 
         // POST: QuestionController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create(QuestionDto QuestionDto)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var result = await _questionsManager.Add(QuestionDto);
+                if (result.IsSuccess)
+                    return RedirectToAction(nameof(Create), "Answer",new {result.Data.QuestionID });
+                else
+                    return View(QuestionDto);
             }
             catch
             {
-                return View();
+                return View(QuestionDto);
             }
         }
 
         // GET: QuestionController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int QuestionId)
         {
-            return View();
+            var Question = await _questionsManager.GetById(QuestionId);
+            return View(Question.Data);
         }
 
         // POST: QuestionController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(QuestionDto QuestionDto)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var Question = await _questionsManager.Update(QuestionDto);
+                if (Question.IsSuccess)
+                    return RedirectToAction(nameof(Index));
+                else
+                    return View(Question.Data);
             }
             catch
             {
-                return View();
+                return View(QuestionDto);
             }
         }
 
-        // GET: QuestionController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+
 
         // POST: QuestionController/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<JsonResult> Delete(int id)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+
+                var result = await _questionsManager.Delete(id);
+                return Json(result);
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                return Json(ex);
             }
         }
     }

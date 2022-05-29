@@ -20,7 +20,9 @@ namespace InfintyTeknoloji.Business.Mapper
             CreateMap<Question, QuestionDto>();
             CreateMap<QuestionDto, Question>();
             CreateMap<Answer, AnswerDto>();
-            CreateMap<AnswerDto, Answer>(); 
+            CreateMap<AnswerDto, Answer>();
+            CreateMap<User, UserModel>();
+            CreateMap<UserModel, User>();
 
         }
     }

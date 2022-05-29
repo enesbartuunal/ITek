@@ -8,7 +8,7 @@ namespace InfinityTeknoloji.Models.Models
 {
     public class AnswerDto
     {
-      
+
         public int AnswerID { get; set; }
 
         public string AnswerBody { get; set; }
@@ -16,8 +16,6 @@ namespace InfinityTeknoloji.Models.Models
         public bool IsTrue { get; set; }
 
         public int QuestionID { get; set; }
-
-      
 
     }
 }

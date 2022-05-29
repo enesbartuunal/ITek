@@ -1,0 +1,25 @@
+﻿@model InfinityTeknoloji.UI.Models.SolveExamModel
+
+@{
+    ViewData["Title"] = "SolveExams";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>SolveExams</h1>
+
+<p>
+    
+</p>
+<div>
+@foreach (var item in Model.Questions) {
+     <div> @Html.DisplayFor(mitem=>item.QuestionBody);</div>
+     @foreach (var item2 in Model.Answers.Where(q=>q.QuestionID==item.QuestionID))
+        {
+             <div> @Html.RadioButtonFor(mitem=>item2.IsTrue,false)
+             @Html.DisplayFor(mitem=>item2.AnswerBody)
+             </div>
+        } 
+     
+}
+</div>   
+

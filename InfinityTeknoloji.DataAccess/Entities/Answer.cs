@@ -18,7 +18,7 @@ namespace InfinityTeknoloji.DataAccess.Entities
 
         public int QuestionID { get; set; }
 
-        public Question Question { get; set; }
+        public  virtual Question Question { get; set; }
 
     }
 }

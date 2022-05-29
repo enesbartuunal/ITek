@@ -62,22 +62,6 @@ namespace InfinityTeknoloji.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Exams",
-                columns: table => new
-                {
-                    ExamID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ExamName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ExamOverTime = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    ExamDesc = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PassingScore = table.Column<decimal>(type: "decimal(18,2)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Exams", x => x.ExamID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -184,26 +168,25 @@ namespace InfinityTeknoloji.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CategoryExam",
+                name: "Exams",
                 columns: table => new
                 {
-                    CategoriesCategoryID = table.Column<int>(type: "int", nullable: false),
-                    CategoriesExamID = table.Column<int>(type: "int", nullable: false)
+                    ExamID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ExamName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ExamOverTime = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    ExamDesc = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PassingScore = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    CategoryID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CategoryExam", x => new { x.CategoriesCategoryID, x.CategoriesExamID });
+                    table.PrimaryKey("PK_Exams", x => x.ExamID);
                     table.ForeignKey(
-                        name: "FK_CategoryExam_Categories_CategoriesCategoryID",
-                        column: x => x.CategoriesCategoryID,
+                        name: "FK_Exams_Categories_CategoryID",
+                        column: x => x.CategoryID,
                         principalTable: "Categories",
                         principalColumn: "CategoryID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CategoryExam_Exams_CategoriesExamID",
-                        column: x => x.CategoriesExamID,
-                        principalTable: "Exams",
-                        principalColumn: "ExamID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -238,18 +221,11 @@ namespace InfinityTeknoloji.DataAccess.Migrations
                     QuestionID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     QuestionBody = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ExamID = table.Column<int>(type: "int", nullable: false),
-                    CategoryID = table.Column<int>(type: "int", nullable: false)
+                    ExamID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Questions", x => x.QuestionID);
-                    table.ForeignKey(
-                        name: "FK_Questions_Categories_CategoryID",
-                        column: x => x.CategoryID,
-                        principalTable: "Categories",
-                        principalColumn: "CategoryID",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Questions_Exams_ExamID",
                         column: x => x.ExamID,
@@ -324,19 +300,14 @@ namespace InfinityTeknoloji.DataAccess.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CategoryExam_CategoriesExamID",
-                table: "CategoryExam",
-                column: "CategoriesExamID");
+                name: "IX_Exams_CategoryID",
+                table: "Exams",
+                column: "CategoryID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ExamUser_UsersId",
                 table: "ExamUser",
                 column: "UsersId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Questions_CategoryID",
-                table: "Questions",
-                column: "CategoryID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Questions_ExamID",
@@ -365,9 +336,6 @@ namespace InfinityTeknoloji.DataAccess.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "CategoryExam");
-
-            migrationBuilder.DropTable(
                 name: "ExamUser");
 
             migrationBuilder.DropTable(
@@ -380,10 +348,10 @@ namespace InfinityTeknoloji.DataAccess.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Categories");
+                name: "Exams");
 
             migrationBuilder.DropTable(
-                name: "Exams");
+                name: "Categories");
         }
     }
 }

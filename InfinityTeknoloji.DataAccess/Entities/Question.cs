@@ -16,13 +16,11 @@ namespace InfinityTeknoloji.DataAccess.Entities
 
         public int ExamID { get; set; }
 
-        public Exam Exam { get; set; }
+        public virtual Exam Exam { get; set; }
 
-        public List<Answer> Answers { get; set; }
+        public virtual List<Answer> Answers { get; set; }
 
-        public int CategoryID { get; set; }
-
-        public Category Category { get; set; }
+      
 
     }
 }

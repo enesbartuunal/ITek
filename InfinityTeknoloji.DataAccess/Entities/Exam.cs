@@ -20,10 +20,14 @@ namespace InfinityTeknoloji.DataAccess.Entities
 
         public decimal? PassingScore { get; set; }
 
-        public List<Question> Questions { get; set; }
+        public int CategoryID { get; set; }
+        public virtual Category Category { get; set; }
+        public  virtual List<Question> Questions { get; set; }
 
-        public List<User> Users { get; set; }
+        public  virtual List<User> Users { get; set; }
 
-        public List<Category> Categories { get; set; }
+      
+
+       
     }
 }

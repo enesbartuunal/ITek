@@ -22,21 +22,6 @@ namespace InfinityTeknoloji.DataAccess.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("CategoryExam", b =>
-                {
-                    b.Property<int>("CategoriesCategoryID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CategoriesExamID")
-                        .HasColumnType("int");
-
-                    b.HasKey("CategoriesCategoryID", "CategoriesExamID");
-
-                    b.HasIndex("CategoriesExamID");
-
-                    b.ToTable("CategoryExam");
-                });
-
             modelBuilder.Entity("ExamUser", b =>
                 {
                     b.Property<int>("ExamsExamID")
@@ -102,6 +87,9 @@ namespace InfinityTeknoloji.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ExamID"), 1L, 1);
 
+                    b.Property<int>("CategoryID")
+                        .HasColumnType("int");
+
                     b.Property<string>("ExamDesc")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -118,6 +106,8 @@ namespace InfinityTeknoloji.DataAccess.Migrations
 
                     b.HasKey("ExamID");
 
+                    b.HasIndex("CategoryID");
+
                     b.ToTable("Exams");
                 });
 
@@ -129,9 +119,6 @@ namespace InfinityTeknoloji.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("QuestionID"), 1L, 1);
 
-                    b.Property<int>("CategoryID")
-                        .HasColumnType("int");
-
                     b.Property<int>("ExamID")
                         .HasColumnType("int");
 
@@ -140,8 +127,6 @@ namespace InfinityTeknoloji.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("QuestionID");
-
-                    b.HasIndex("CategoryID");
 
                     b.HasIndex("ExamID");
 
@@ -350,21 +335,6 @@ namespace InfinityTeknoloji.DataAccess.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("CategoryExam", b =>
-                {
-                    b.HasOne("InfinityTeknoloji.DataAccess.Entities.Category", null)
-                        .WithMany()
-                        .HasForeignKey("CategoriesCategoryID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("InfinityTeknoloji.DataAccess.Entities.Exam", null)
-                        .WithMany()
-                        .HasForeignKey("CategoriesExamID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("ExamUser", b =>
                 {
                     b.HasOne("InfinityTeknoloji.DataAccess.Entities.Exam", null)
@@ -391,21 +361,24 @@ namespace InfinityTeknoloji.DataAccess.Migrations
                     b.Navigation("Question");
                 });
 
-            modelBuilder.Entity("InfinityTeknoloji.DataAccess.Entities.Question", b =>
+            modelBuilder.Entity("InfinityTeknoloji.DataAccess.Entities.Exam", b =>
                 {
                     b.HasOne("InfinityTeknoloji.DataAccess.Entities.Category", "Category")
-                        .WithMany("Questions")
+                        .WithMany("Exams")
                         .HasForeignKey("CategoryID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("InfinityTeknoloji.DataAccess.Entities.Question", b =>
+                {
                     b.HasOne("InfinityTeknoloji.DataAccess.Entities.Exam", "Exam")
                         .WithMany("Questions")
                         .HasForeignKey("ExamID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Category");
 
                     b.Navigation("Exam");
                 });
@@ -463,7 +436,7 @@ namespace InfinityTeknoloji.DataAccess.Migrations
 
             modelBuilder.Entity("InfinityTeknoloji.DataAccess.Entities.Category", b =>
                 {
-                    b.Navigation("Questions");
+                    b.Navigation("Exams");
                 });
 
             modelBuilder.Entity("InfinityTeknoloji.DataAccess.Entities.Exam", b =>

@@ -7,9 +7,7 @@ using System.Threading.Tasks;
 
 namespace InfinityTeknoloji.DataAccess.Entities
 {
-    public class User:IdentityUser
+    public class Role:IdentityRole
     {
-        public virtual List<Exam> Exams { get; set; }
-
     }
 }

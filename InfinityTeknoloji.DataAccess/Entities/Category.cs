@@ -14,8 +14,8 @@ namespace InfinityTeknoloji.DataAccess.Entities
 
         public string CategoryName { get; set; }
 
-        public List<Exam> Categories { get; set; }
+        public  virtual List<Exam> Exams { get; set; }
 
-        public List<Question> Questions { get; set; }
+      
     }
 }
